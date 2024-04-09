@@ -16,9 +16,7 @@ export class SingUpPage implements OnInit {
     name: new FormControl ('',[Validators.required]),
     lastname: new FormControl ('',[Validators.required]),
     phone: new FormControl ('',[Validators.required]),
-    identificacion: new FormControl('', [Validators.required]), // Nuevo campo de identificación en el formulario
-});
-
+  });
   
   constructor(
     private firebaseSvc: FirebaseService,
@@ -29,12 +27,12 @@ export class SingUpPage implements OnInit {
 
   async submit() {
     if (this.form.valid) {
-      const { email, password, name, lastname, phone, identificacion } = this.form.value;
-      const userInfo = { name, lastname, phone, identificacion }; // Incluye la identificación en el objeto userInfo
+      const { email, password, name, lastname, phone } = this.form.value;
+      const userInfo = { name, lastname, phone }; // Objeto de información del usuario
       const loading = await this.utilsSvc.loading();
       await loading.present();
       this.firebaseSvc.SignUp(email, password, userInfo).then(async res => {
-        await this.firebaseSvc.SetUserData(res.user, userInfo);
+        await this.firebaseSvc.SetUserData(this.form.value.name);
         console.log(res);
       }).catch(error => {
         console.log(error);
@@ -51,3 +49,5 @@ export class SingUpPage implements OnInit {
       
     }
   }
+
+}

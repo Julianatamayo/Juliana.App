@@ -1,3 +1,4 @@
+import { User } from './../model/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
